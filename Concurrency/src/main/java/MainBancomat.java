@@ -2,13 +2,13 @@ public class MainBancomat {
     public static void main(String[] args) {
 
 
-    Bancomat ATM = new Bancomat(1000);
+    Bancomat ATM = new Bancomat(100000);
 
-    
+
     Thread thread1 = new Thread(new Runnable() {
         @Override
         public void run() {
-           ATM.getoutmoney("Sara", 300);
+           ATM.getoutmoney("Sara", 3000);
         }
     });
 
@@ -17,7 +17,7 @@ public class MainBancomat {
         @Override
         public void run() {
 
-            ATM.getoutmoney("Saranush", 600);
+            ATM.getoutmoney("Saranush", 6000);
         }
     });
 
@@ -25,7 +25,7 @@ public class MainBancomat {
         @Override
         public void run() {
 
-            ATM.getoutmoney("Rise", 400);
+            ATM.getoutmoney("Rise", 400000);
         }
     });
 
