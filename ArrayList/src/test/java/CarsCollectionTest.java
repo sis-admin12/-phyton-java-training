@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CarsCollectionTest {
 
-    private CarsCollection carsCollection;
+    private CarsCollection<Cars> carsCollection;
 
 
     @BeforeEach
 
     public void setUp() throws Exception {
 
-        carsCollection = new CarsHashSet() {
+        carsCollection = new CarsHashSet<>() {
         };
 
         for (int i = 0; i < 100; i++) {

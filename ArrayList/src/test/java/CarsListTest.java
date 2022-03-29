@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CarsListTest {
 
-    private CarsList carsList;
+    private CarsList<Cars> carsList;
 
     @BeforeEach
     void setUp() {
-        carsList = new CarsLinkedList();
+        carsList = new CarsLinkedList<>();
         for(int i=0; i<100; i++){
             carsList.add(new Cars("Brand"+i, i));
         }

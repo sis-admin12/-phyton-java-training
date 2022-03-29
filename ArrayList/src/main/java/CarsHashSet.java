@@ -1,14 +1,14 @@
 import java.util.Iterator;
 
-public class CarsHashSet implements CarsSet{
+public class CarsHashSet<T> implements CarsSet<T> {
 
     private static final int INITIAL_CAPACITY = 16;
     private static final double LOAD_FACTOR = 0.75;
     private int size = 0;
-    private Entry[] array = new Entry[INITIAL_CAPACITY];
+    private Object[] array = new Object[INITIAL_CAPACITY];
 
     @Override
-    public boolean add(Cars cars) {
+    public boolean add(T cars) {
         if (size >= (array.length * LOAD_FACTOR)) {
             increaseArray();
         }
@@ -19,14 +19,14 @@ public class CarsHashSet implements CarsSet{
         return added;
     }
 
-    private boolean add(Cars cars, Entry[] dst) {
+    private boolean add(T cars, Object[] dst) {
         int position = getElementPosition(cars, dst.length);
         if (dst[position] == null) {
             Entry entry = new Entry(cars, null);
             dst[position] = entry;
             return true;
         } else {
-            Entry existedElement = dst[position];
+            Entry existedElement = (Entry) dst[position];
             while (true) {
                 if (existedElement.value.equals(cars)) {
                     return false;
@@ -41,12 +41,12 @@ public class CarsHashSet implements CarsSet{
     }
 
     @Override
-    public boolean remove(Cars cars) {
+    public boolean remove(T cars) {
         int position = getElementPosition(cars, array.length);
         if (array[position] == null) {
             return false;
         }
-        Entry secondLast = array[position];
+        Entry secondLast = (Entry) array[position];
         Entry last = secondLast.next;
         if (secondLast.value.equals(cars)) {
             array[position] = last;
@@ -68,9 +68,9 @@ public class CarsHashSet implements CarsSet{
 
 
     @Override
-    public boolean contains(Cars cars) {
+    public boolean contains(T cars) {
         int position = getElementPosition(cars, array.length);
-        Entry currentElement = array[position];
+        Entry currentElement = (Entry) array[position];
         while (currentElement != null) {
             if (currentElement.value.equals(cars)) {
                 return true;
@@ -87,13 +87,13 @@ public class CarsHashSet implements CarsSet{
 
     @Override
     public void clear() {
-        array = new Entry[INITIAL_CAPACITY];
+        array = new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
     @Override
-    public Iterator<Cars> iterator() {
-        return new Iterator<Cars>() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
 
             int index =0;
             int arrayIndex = 0;
@@ -105,13 +105,13 @@ public class CarsHashSet implements CarsSet{
             }
 
             @Override
-            public Cars next() {
+            public T next() {
                 while (array[arrayIndex] == null){
                     arrayIndex++;
                 }if (entry == null){
-                    entry = array[arrayIndex];
+                    entry = (Entry) array[arrayIndex];
                                 }
-                Cars result = entry.value;
+                T result = entry.value;
                 entry = entry.next;
                 if (entry == null){
                     arrayIndex++;
@@ -123,26 +123,26 @@ public class CarsHashSet implements CarsSet{
                     }
 
     private void increaseArray() {
-        Entry[] newArray = new Entry[array.length * 2];
-        for (Entry entry : array) {
-            Entry existedElement = entry;
+        Object[] newArray = new Object[array.length * 2];
+        for (Object entry :  array) {
+            Entry existedElement = (Entry) entry;
             while (existedElement != null) {
                 add(existedElement.value, newArray);
                 existedElement = existedElement.next;
             }
         }
-        array = newArray;
+         array = newArray;
     }
 
-    private int getElementPosition(Cars cars, int arrayLength) {
+    private int getElementPosition(T cars, int arrayLength) {
         return Math.abs(cars.hashCode() % arrayLength);
     }
 
-    private static class Entry {
-        private Cars value;
+    private class Entry {
+        private T value;
         private Entry next;
 
-        public Entry(Cars value, Entry next) {
+        public Entry(T value, Entry next) {
             this.value = value;
             this.next = next;
         }

@@ -1,9 +1,9 @@
-public interface CarsList extends CarsCollection{
+public interface CarsList<T> extends CarsCollection<T> {
 
-    Cars get(int index);
-    boolean add(Cars cars);
-    boolean add(Cars car, int index);
-    boolean remove(Cars cars);
+    T get(int index);
+    boolean add(T cars);
+    boolean add(T car, int index);
+    boolean remove(T cars);
     boolean  removeN(int index);
     int size();
     void clear();

@@ -2,18 +2,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CarsSetTest {
 
-    private CarsSet carsSet;
+    private CarsSet<Cars> carsSet;
 
     @BeforeEach
     @DisplayName("Setare din start")
     public void setUp() throws Exception {
-        carsSet = new CarsHashSet();
+        carsSet = new CarsHashSet<>();
         for (int i = 0; i < 100; i++) {
             carsSet.add(new Cars("Brand" + i, i));
         }

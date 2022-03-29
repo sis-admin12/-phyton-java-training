@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class CarsLinkedList implements CarsList{
+public class CarsLinkedList<T> implements CarsList<T>, CarQueue<T> {
 
     private Node first;
     private Node last;
@@ -8,12 +8,12 @@ public class CarsLinkedList implements CarsList{
 
 
     @Override
-    public Cars get(int index) {
+    public T get(int index) {
         return getNode(index).value;
     }
 
     @Override
-    public boolean add(Cars cars) {
+    public boolean add(T cars) {
         if (size == 0) {
             first = new Node(null, cars, null);
             last = first;
@@ -27,7 +27,7 @@ public class CarsLinkedList implements CarsList{
     }
 
     @Override
-    public boolean add(Cars car, int index) {
+    public boolean add(T car, int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
@@ -52,7 +52,7 @@ public class CarsLinkedList implements CarsList{
 
 
     @Override
-    public boolean remove(Cars cars) {
+    public boolean remove(T cars) {
         int index = findElement(cars);
         if (index != -1) {
             return removeN(index);
@@ -61,7 +61,7 @@ public class CarsLinkedList implements CarsList{
     }
 
     @Override
-    public boolean contains(Cars cars) {
+    public boolean contains(T cars) {
         return findElement(cars) != -1;
     }
 
@@ -97,8 +97,8 @@ public class CarsLinkedList implements CarsList{
     }
 
     @Override
-    public Iterator<Cars> iterator() {
-        return new Iterator<Cars>() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
             private Node node = first;
             @Override
             public boolean hasNext() {
@@ -106,15 +106,15 @@ public class CarsLinkedList implements CarsList{
             }
 
             @Override
-            public Cars next() {
-                Cars cars = node.value;
+            public T next() {
+                T cars = node.value;
                 node = node.next;
                 return cars;
             }
         };
     }
 
-    private int findElement(Cars cars) {
+    private int findElement(T cars) {
         Node node = first;
         for (int i = 0; i < size; i++) {
             if (node.value.equals(cars)) {
@@ -136,15 +136,27 @@ public class CarsLinkedList implements CarsList{
         return node;
 
     }
-    private static class Node{
+    private class Node{
         private Node previous;
-        private Cars value;
+        private T value;
         private Node next;
 
-        public Node(Node previous, Cars value, Node next) {
+        public Node(Node previous, T value, Node next) {
             this.previous = previous;
             this.value = value;
             this.next = next;
         }
+    }
+
+    @Override
+    public T peek() {
+        return size > 0 ? get(0) : null;
+    }
+
+    @Override
+    public T poll() {
+        T car = get(0);
+        removeN(0);
+        return car;
     }
 }

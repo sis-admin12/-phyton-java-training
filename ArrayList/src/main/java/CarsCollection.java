@@ -1,11 +1,11 @@
-public interface CarsCollection extends Iterable<Cars> {
-    boolean add(Cars cars);
+public interface CarsCollection<T> extends Iterable<T> {
+    boolean add(T cars);
 
-    boolean remove(Cars cars);
+    boolean remove(T cars);
 
     int size();
 
     void clear();
 
-    boolean contains(Cars cars);
+    boolean contains(T cars);
 }

@@ -1,20 +1,20 @@
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class CarsArrayList implements CarsList{
+public class CarsArrayList<T> implements CarsList<T> {
 
-    private Cars[] array = new Cars[10];
+    private Object[] array = new Object[10];
     private int size=0;
 
 
     @Override
-    public Cars get(int index) {
+    public T get(int index) {
         checkindex(index);
-        return array[index];
+        return (T) array[index];
     }
 
     @Override
-    public boolean add(Cars cars) {
+    public boolean add(T cars) {
         increaseArray();
         array[size] = cars;
         size++;
@@ -22,7 +22,7 @@ public class CarsArrayList implements CarsList{
     }
 
     @Override
-    public boolean add(Cars cars, int index) {
+    public boolean add(T cars, int index) {
         increaseArray();
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
@@ -34,7 +34,7 @@ public class CarsArrayList implements CarsList{
     }
 
     @Override
-    public boolean contains(Cars cars) {
+    public boolean contains(T cars) {
         for (int i = 0; i < size; i++) {
             if (array[i].equals(cars)) {
                 return true;
@@ -44,7 +44,7 @@ public class CarsArrayList implements CarsList{
     }
 
     @Override
-    public boolean remove(Cars cars) {
+    public boolean remove(T cars) {
         for(int i=0; i<size;i++){
             if(array[i].equals(cars)){
                 return removeN(i);
@@ -71,13 +71,13 @@ public class CarsArrayList implements CarsList{
 
     @Override
     public void clear() {
-         array = new Cars[10];
+         array = new Object[10];
          size=0;
     }
 
     @Override
-    public Iterator<Cars> iterator() {
-        return new Iterator<Cars>() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
 
             int index =0;
 
@@ -87,8 +87,8 @@ public class CarsArrayList implements CarsList{
             }
 
             @Override
-            public Cars next() {
-                return array[index++];
+            public T next() {
+                return (T) array[index++];
             }
         };
     }
